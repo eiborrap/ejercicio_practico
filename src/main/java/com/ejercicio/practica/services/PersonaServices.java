@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.ejercicio.practica.dtos.PersonaDTO;
 import com.ejercicio.practica.mappers.Mapper;
 import com.ejercicio.practica.models.Persona;
-import com.ejercicio.practica.repositories.ContactoRepository;
 import com.ejercicio.practica.repositories.PersonaRepository;
 
 @Service
