@@ -1,16 +1,25 @@
 package com.ejercicio.practica.models;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "T_CONTACTS")
 public class Contacto {
+
+    /**
+     * Primary key of Contacto is Persona.id (shared PK).
+     * Column T_CONTACTS.ID_PERSON is both PK and FK to T_PERSONS.ID_PERSON.
+     */
+    @Id
+    @OneToOne(optional = false)
+    @JoinColumn(name = "ID_PERSON", referencedColumnName = "ID_PERSON")
+    private Persona persona;
+
     @Column(name = "Telephone", nullable = false)
     private Integer telephone;
 
@@ -20,19 +29,49 @@ public class Contacto {
     @Column(name = "Email")
     private String email;
 
-    
-    @EmbeddedId
-    private ContactoId id;
-
-    @ManyToOne(optional = false)
-    @MapsId("idPersona")
-    @JoinColumn(name = "ID_PERSON", referencedColumnName = "ID_PERSON")
-    private Persona personaById;
-
-    @ManyToOne(optional = false)
-    @MapsId("dniPersona")
+    /**
+     * Additional foreign key by DNI:
+     * T_CONTACTS.DNI -> T_PERSONS.DNI (unique in Persona).
+     */
+    @OneToOne(optional = false)
     @JoinColumn(name = "DNI", referencedColumnName = "DNI")
     private Persona personaByDni;
 
+    public Contacto() {
+    }
 
+    public Contacto(Integer telephone, String street, String email, Persona persona) {
+        this.telephone = telephone;
+        this.street = street;
+        this.email = email;
+        this.persona = persona;
+    }
+
+    public Contacto(Integer telephone, String street, String email, Persona persona, Persona personaByDni) {
+        this.telephone = telephone;
+        this.street = street;
+        this.email = email;
+        this.persona = persona;
+        this.personaByDni = personaByDni;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public Integer getTelephone() {
+        return telephone;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Persona getPersonaByDni() {
+        return personaByDni;
+    }
 }
