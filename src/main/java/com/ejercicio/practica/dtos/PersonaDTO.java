@@ -1,7 +1,6 @@
 package com.ejercicio.practica.dtos;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -27,11 +26,11 @@ public class PersonaDTO implements Serializable{
         lastName = builder.lastName;
         fullName = builder.fullName;
         DNI = builder.DNI;
-        contactDetails = builder.contactDetails.copy(); //Copiamos solo aqui, no en el builder
+        contactDetails = builder.contactDetails; //Copiamos solo aqui, no en el builder
     }
 
-    public Optional<Integer> getIdPerson() {
-        return Optional.ofNullable(idPerson);
+    public Integer getIdPerson() {
+        return idPerson;
     }
 
     public String getName() {
@@ -42,8 +41,8 @@ public class PersonaDTO implements Serializable{
         return lastName;
     }
 
-    public Optional<String> getFullName() {
-        return Optional.ofNullable(fullName);
+    public String getFullName() {
+        return fullName;
     }
     
     public String getDNI() {

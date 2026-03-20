@@ -1,7 +1,6 @@
 package com.ejercicio.practica.dtos;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -9,8 +8,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class ContactDetailsDTO implements Serializable{
     private final Integer telephone;
-    private final String street;
-    private final String email;
+    private final String street; //Optional, can return null
+    private final String email; //Optional, can return null
 
     public ContactDetailsDTO(Builder builder){
         this.telephone = builder.telephone;
@@ -23,11 +22,11 @@ public class ContactDetailsDTO implements Serializable{
     public int getTelephone(){
         return telephone; //It can't be null, telephone is mandatory
     }
-    public Optional<String> getStreet(){
-        return Optional.ofNullable(street);
+    public String getStreet(){
+        return street;
     }
-    public Optional<String> getEmail(){
-        return Optional.ofNullable(email);
+    public String getEmail(){
+        return email;
     }
 
         

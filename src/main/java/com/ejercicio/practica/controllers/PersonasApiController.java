@@ -33,7 +33,7 @@ public class PersonasApiController {
 
     @PostMapping
     public ResponseEntity<PersonaDTO> createPersona(@RequestBody PersonaDTO persona) {
-        return ResponseEntity.ok(new PersonaDTO(null));
+        return ResponseEntity.ok(personaServices.createPersona(persona));
     }
 
     @GetMapping("/{DNI}")

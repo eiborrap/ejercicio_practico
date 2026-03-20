@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -11,14 +12,15 @@ import jakarta.persistence.Table;
 @Table(name = "T_CONTACTS")
 public class Contacto {
 
-    /**
-     * Primary key of Contacto is Persona.id (shared PK).
-     * Column T_CONTACTS.ID_PERSON is both PK and FK to T_PERSONS.ID_PERSON.
-     */
     @Id
+    @Column(name = "ID_PERSON")
+    private Integer id;  // PK of Contacto; same value as Persona.id
+
     @OneToOne(optional = false)
+    @MapsId  // <-- ties this association to the PK field above
     @JoinColumn(name = "ID_PERSON", referencedColumnName = "ID_PERSON")
     private Persona persona;
+
 
     @Column(name = "Telephone", nullable = false)
     private Integer telephone;

@@ -17,24 +17,36 @@ public final class Mapper {
      * If the DTO has no id, we keep id=0 so JPA {@code @GeneratedValue} can assign
      * it on insert.
      */
-    public static Persona toPersona(PersonaDTO dto) {
+    public static Persona toExistingPersona(PersonaDTO dto) {
 
         ContactDetailsDTO contactDetails = dto.getContactDetails();
         Persona p = new Persona(
-            dto.getIdPerson().orElse(null), 
+            dto.getIdPerson(), 
             dto.getName(), 
             dto.getLastName(), 
             dto.getDNI()
             );
         p.setContacto(new Contacto(
                 contactDetails.getTelephone(),
-                contactDetails.getStreet().orElseThrow(),
-                contactDetails.getEmail().orElseThrow(),p));
+                contactDetails.getStreet(),
+                contactDetails.getEmail(),
+                p));
 
         return p;
 
     }
 
+    public static Persona toNewPersona(PersonaDTO dto) {
+        Persona p = new Persona(
+            null, 
+            dto.getName(), 
+            dto.getLastName(), 
+            dto.getDNI()
+            );
+
+        return p;
+
+    }
 
     /**
      * Entity -> DTO. ContactDetails are mandatory in {@link PersonaDTO}, so this
