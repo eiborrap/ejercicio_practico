@@ -57,15 +57,15 @@ public final class Mapper {
         ContactDetailsDTO contactDetails = toContactDetailsDTO(persona.getContacto());
 
         return new PersonaDTO.Builder(persona.getName(), persona.getLastname(), persona.getDni(), contactDetails)
-                .idPerson(persona.getId())
-                .fullName(persona.getName() + " " + persona.getLastname())
+                .setIdPerson(persona.getId())
+                .setFullName(persona.getName() + " " + persona.getLastname())
                 .build();
     }
 
     private static ContactDetailsDTO toContactDetailsDTO(Contacto c){
         return new ContactDetailsDTO.Builder(c.getTelephone())
-                .street(c.getStreet())
-                .email(c.getEmail())
+                .setStreet(c.getStreet())
+                .setEmail(c.getEmail())
                 .build();
     }
 }

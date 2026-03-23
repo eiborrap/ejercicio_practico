@@ -5,7 +5,12 @@ import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
+@JsonDeserialize(builder = ContactDetailsDTO.Builder.class)
 public class ContactDetailsDTO implements Serializable{
     private final Integer telephone;
     private final String street; //Optional, can return null
@@ -31,25 +36,27 @@ public class ContactDetailsDTO implements Serializable{
 
         
     protected ContactDetailsDTO copy(){
-        return new ContactDetailsDTO.Builder(telephone).street(street).email(email).build();
+        return new ContactDetailsDTO.Builder(telephone).setStreet(street).setEmail(email).build();
     }
 
+    @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "set")
     public static final class Builder{
         private final Integer telephone; //obligatorio
         private String street;
         private String email;
 
-        public Builder(Integer telephone){
+        @JsonCreator
+        public Builder(@JsonProperty("telephone") Integer telephone){
             if(telephone == null){
                 throw new IllegalArgumentException("telephone is mandatory");
             }
             this.telephone = telephone;
         }
-        public Builder street(String street){
+        public Builder setStreet(String street){
             this.street = street;
             return this;
         }
-        public Builder email(String email){
+        public Builder setEmail(String email){
             this.email = email;
             return this;
         }

@@ -6,12 +6,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema
 @JsonInclude
+@JsonDeserialize(builder = PersonaDTO.Builder.class)
 public class PersonaDTO implements Serializable{
     private final Integer idPerson;
     private final String name;
@@ -26,7 +31,7 @@ public class PersonaDTO implements Serializable{
         lastName = builder.lastName;
         fullName = builder.fullName;
         DNI = builder.DNI;
-        contactDetails = builder.contactDetails; //Copiamos solo aqui, no en el builder
+        contactDetails = builder.contactDetails;
     }
 
     public Integer getIdPerson() {
@@ -53,6 +58,7 @@ public class PersonaDTO implements Serializable{
         return contactDetails;
     }
 
+    @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "set")
     public static final class Builder{
         private Integer idPerson;
         private String name;
@@ -63,11 +69,12 @@ public class PersonaDTO implements Serializable{
 
         //Se piden todos los parámetros obligatorios (En este caso todos) 
         // para no crear un objeto incompleto
+        @JsonCreator
         public Builder(
-            String name, 
-            String lastName, 
-            String DNI, 
-            ContactDetailsDTO contactDetails
+            @JsonProperty("name") String name, 
+            @JsonProperty("lastName") String lastName, 
+            @JsonProperty("DNI") String DNI, 
+            @JsonProperty("contactDetails") ContactDetailsDTO contactDetails
         ){
             if(name == null || StringUtils.isBlank(name)){
                 throw new IllegalArgumentException("name is mandatory");
@@ -87,11 +94,11 @@ public class PersonaDTO implements Serializable{
             this.contactDetails = contactDetails;
         }
 
-        public Builder idPerson(Integer idPerson){
+        public Builder setIdPerson(Integer idPerson){
             this.idPerson = idPerson;
             return this; 
         }
-        public Builder fullName(String fullName){
+        public Builder setFullName(String fullName){
             this.fullName = fullName;
             return this;
         }
