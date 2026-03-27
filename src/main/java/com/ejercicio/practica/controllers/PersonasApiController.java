@@ -3,9 +3,10 @@ package com.ejercicio.practica.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ejercicio.practica.dtos.ContactDetailsDTO;
 import com.ejercicio.practica.dtos.PersonaDTO;
 import com.ejercicio.practica.services.PersonaServices;
+
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -31,13 +32,9 @@ public class PersonasApiController {
     public List<PersonaDTO> getAllPersonas() {
         return personaServices.getAllPersonas();
     }
-    @PostMapping("/h")
-    public ResponseEntity<Object> c(@RequestBody ContactDetailsDTO persona) {
-        System.out.println(persona);
-        return ResponseEntity.ok(null);
-    }
+
     @PostMapping
-    public ResponseEntity<PersonaDTO> createPersona(@RequestBody PersonaDTO persona) {
+    public ResponseEntity<PersonaDTO> createPersona(@Valid @RequestBody PersonaDTO persona) {
         return ResponseEntity.ok(personaServices.createPersona(persona));
     }
 

@@ -6,17 +6,23 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.ejercicio.practica.annotations.Dni;
+
 import tools.jackson.databind.annotation.JsonDeserialize;
 import tools.jackson.databind.annotation.JsonPOJOBuilder;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Size;
 
 @Schema
 @JsonDeserialize(builder = PersonaDTO.Builder.class)
 public class PersonaDTO implements Serializable{
     private final Integer idPerson;
+    @Size(max=30)
     private final String name;
     private final String fullName;
+    @Size(max=50)
     private final String lastName;
+    @Dni
     private final String dni;
     private final ContactDetailsDTO contactDetails;
 

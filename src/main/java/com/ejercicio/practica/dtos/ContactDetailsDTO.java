@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import jakarta.validation.constraints.Email;
 import tools.jackson.databind.annotation.JsonDeserialize;
 import tools.jackson.databind.annotation.JsonPOJOBuilder;
 
@@ -12,6 +13,7 @@ import tools.jackson.databind.annotation.JsonPOJOBuilder;
 public class ContactDetailsDTO implements Serializable{
     private final Integer telephone;
     private final String street; //Optional, can return null
+    @Email
     private final String email; //Optional, can return null
 
     private ContactDetailsDTO(Builder builder){

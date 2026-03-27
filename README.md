@@ -5,3 +5,5 @@
 - Utilizar optionals en los DTOs es mala práctica porque solo aprota complejidad y ninguna ventaja. En nuestro caso SI que vamos a devolver nulls pero documentándolo. De esta forma el trabajo de mapeado de  Jackson va a ser mas sencillo.
 
 - Variable DNI en PersonaDTO no sigue los estándares. Para adequarla tiene que estar escrita toda en mayúscula. Si no la renombramos vamos a tener problemas con Jackson al deserializar los objetos PersonaDTO. El atributo de la tabla si que puede seguir siendo DNI.
+
+- Declaramos telefono como un número como lo indica la práctica pero lo mas apropiado sería declararlo como un String para poder aceptar códigos de países(ej: +34 656 656 656).
