@@ -3,6 +3,7 @@ package com.ejercicio.practica.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ejercicio.practica.annotations.Dni;
 import com.ejercicio.practica.dtos.PersonaDTO;
 import com.ejercicio.practica.services.PersonaServices;
 
@@ -39,12 +40,12 @@ public class PersonasApiController {
     }
 
     @GetMapping("/{DNI}")
-    public ResponseEntity<PersonaDTO> getPersona(@PathVariable String DNI) {
+    public ResponseEntity<PersonaDTO> getPersona(@PathVariable @Dni String DNI) {
         return ResponseEntity.ok(personaServices.getByDni(DNI));
     }
 
     @PutMapping("/{DNI}")
-    public ResponseEntity<Object> updatePersona(@PathVariable String DNI, @RequestBody PersonaDTO persona) {
+    public ResponseEntity<Object> updatePersona(@PathVariable @Dni String DNI, @RequestBody PersonaDTO persona) {
         try{
             personaServices.updatePersona(DNI, persona);
             return ResponseEntity.ok().build();
@@ -55,7 +56,7 @@ public class PersonasApiController {
     }
 
     @DeleteMapping("/{DNI}")
-    public ResponseEntity<Object> deletePersona(@PathVariable String DNI) {
+    public ResponseEntity<Object> deletePersona(@PathVariable @Dni String DNI) {
         personaServices.deleteByDni(DNI);
         return ResponseEntity.noContent().build();
 

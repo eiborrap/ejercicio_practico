@@ -7,7 +7,7 @@ import com.ejercicio.practica.validators.DniValidator;
 
 @Documented
 @Constraint(validatedBy = DniValidator.class)
-@Target({ ElementType.FIELD })
+@Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Dni {
     String message() default "Invalid DNI format";
