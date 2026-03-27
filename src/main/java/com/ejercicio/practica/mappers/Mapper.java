@@ -17,32 +17,20 @@ public final class Mapper {
      * If the DTO has no id, we keep id=0 so JPA {@code @GeneratedValue} can assign
      * it on insert.
      */
-    public static Persona toExistingPersona(PersonaDTO dto) {
+    public static Persona toPersona(PersonaDTO dto) {
 
         ContactDetailsDTO contactDetails = dto.getContactDetails();
         Persona p = new Persona(
             dto.getIdPerson(), 
             dto.getName(), 
             dto.getLastName(), 
-            dto.getDNI()
+            dto.getDni()
             );
         p.setContacto(new Contacto(
                 contactDetails.getTelephone(),
                 contactDetails.getStreet(),
                 contactDetails.getEmail(),
                 p));
-
-        return p;
-
-    }
-
-    public static Persona toNewPersona(PersonaDTO dto) {
-        Persona p = new Persona(
-            null, 
-            dto.getName(), 
-            dto.getLastName(), 
-            dto.getDNI()
-            );
 
         return p;
 
@@ -56,14 +44,19 @@ public final class Mapper {
     public static PersonaDTO toPersonaDTO(Persona persona) {
         ContactDetailsDTO contactDetails = toContactDetailsDTO(persona.getContacto());
 
-        return new PersonaDTO.Builder(persona.getName(), persona.getLastname(), persona.getDni(), contactDetails)
+        return new PersonaDTO.Builder()
+                .setName(persona.getName())
+                .setLastName(persona.getLastname())
+                .setDni(persona.getDni())
                 .setIdPerson(persona.getId())
                 .setFullName(persona.getName() + " " + persona.getLastname())
+                .setContactDetails(contactDetails)
                 .build();
     }
 
     private static ContactDetailsDTO toContactDetailsDTO(Contacto c){
-        return new ContactDetailsDTO.Builder(c.getTelephone())
+        return new ContactDetailsDTO.Builder()
+                .setTelephone(c.getTelephone())
                 .setStreet(c.getStreet())
                 .setEmail(c.getEmail())
                 .build();

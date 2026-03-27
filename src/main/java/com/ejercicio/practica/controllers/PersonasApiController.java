@@ -3,6 +3,7 @@ package com.ejercicio.practica.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ejercicio.practica.dtos.ContactDetailsDTO;
 import com.ejercicio.practica.dtos.PersonaDTO;
 import com.ejercicio.practica.services.PersonaServices;
 
@@ -30,7 +31,11 @@ public class PersonasApiController {
     public List<PersonaDTO> getAllPersonas() {
         return personaServices.getAllPersonas();
     }
-
+    @PostMapping("/h")
+    public ResponseEntity<Object> c(@RequestBody ContactDetailsDTO persona) {
+        System.out.println(persona);
+        return ResponseEntity.ok(null);
+    }
     @PostMapping
     public ResponseEntity<PersonaDTO> createPersona(@RequestBody PersonaDTO persona) {
         return ResponseEntity.ok(personaServices.createPersona(persona));
@@ -38,12 +43,18 @@ public class PersonasApiController {
 
     @GetMapping("/{DNI}")
     public ResponseEntity<PersonaDTO> getPersona(@PathVariable String DNI) {
-        return ResponseEntity.ok(personaServices.getByDNI(DNI));
+        return ResponseEntity.ok(personaServices.getByDni(DNI));
     }
 
     @PutMapping("/{DNI}")
-    public ResponseEntity<PersonaDTO> updatePersona(@PathVariable String DNI, @RequestBody PersonaDTO persona) {
-        return ResponseEntity.ok(new PersonaDTO(null));
+    public ResponseEntity<Object> updatePersona(@PathVariable String DNI, @RequestBody PersonaDTO persona) {
+        try{
+            personaServices.updatePersona(DNI, persona);
+            return ResponseEntity.ok().build();
+
+        }catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e);
+        }
     }
 
     @DeleteMapping("/{DNI}")

@@ -6,23 +6,18 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
+import tools.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonPOJOBuilder;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema
-@JsonInclude
 @JsonDeserialize(builder = PersonaDTO.Builder.class)
 public class PersonaDTO implements Serializable{
     private final Integer idPerson;
     private final String name;
     private final String fullName;
     private final String lastName;
-    private final String DNI;
+    private final String dni;
     private final ContactDetailsDTO contactDetails;
 
     public PersonaDTO(PersonaDTO.Builder builder){
@@ -30,7 +25,7 @@ public class PersonaDTO implements Serializable{
         name = builder.name;
         lastName = builder.lastName;
         fullName = builder.fullName;
-        DNI = builder.DNI;
+        dni = builder.dni;
         contactDetails = builder.contactDetails;
     }
 
@@ -50,8 +45,8 @@ public class PersonaDTO implements Serializable{
         return fullName;
     }
     
-    public String getDNI() {
-        return DNI;
+    public String getDni() {
+        return dni;
     }
 
     public ContactDetailsDTO getContactDetails() {
@@ -64,34 +59,24 @@ public class PersonaDTO implements Serializable{
         private String name;
         private String lastName;
         private String fullName;
-        private String DNI;
+        private String dni;
         private ContactDetailsDTO contactDetails;
-
-        //Se piden todos los parámetros obligatorios (En este caso todos) 
-        // para no crear un objeto incompleto
-        @JsonCreator
-        public Builder(
-            @JsonProperty("name") String name, 
-            @JsonProperty("lastName") String lastName, 
-            @JsonProperty("DNI") String DNI, 
-            @JsonProperty("contactDetails") ContactDetailsDTO contactDetails
-        ){
-            if(name == null || StringUtils.isBlank(name)){
-                throw new IllegalArgumentException("name is mandatory");
-            }
-            if(lastName == null || StringUtils.isBlank(lastName)){
-                throw new IllegalArgumentException("lastName is mandatory");
-            }
-            if(DNI == null || StringUtils.isBlank(DNI)){
-                throw new IllegalArgumentException("DNI is mandatory");
-            }
-            if(contactDetails == null){
-                throw new IllegalArgumentException("contactDetails is mandatory");
-            }
+        
+        public Builder(){};
+        
+        public Builder setName(String name){
             this.name = name;
+            return this;
+        }
+
+        public Builder setLastName(String lastName){
             this.lastName = lastName;
-            this.DNI = DNI;
-            this.contactDetails = contactDetails;
+            return this;
+        }
+        
+        public Builder setDni(String dni){
+            this.dni = dni;
+            return this;
         }
 
         public Builder setIdPerson(Integer idPerson){
@@ -103,7 +88,25 @@ public class PersonaDTO implements Serializable{
             return this;
         }
 
+        public Builder setContactDetails(ContactDetailsDTO contactDetailsDTO){
+            this.contactDetails = contactDetailsDTO;
+            return this;
+        }
+
         public PersonaDTO build(){
+            if(name == null || StringUtils.isBlank(name)){
+                throw new IllegalArgumentException("name is mandatory");
+            }
+            if(lastName == null || StringUtils.isBlank(lastName)){
+                throw new IllegalArgumentException("lastName is mandatory");
+            }
+            if(dni == null || StringUtils.isBlank(dni)){
+                System.out.println("DNI:"+ dni);
+                throw new IllegalArgumentException("dni is mandatory");
+            }
+            if(contactDetails == null){
+                throw new IllegalArgumentException("contactDetails is mandatory");
+            }
             return new PersonaDTO(this);
         }
     }
@@ -116,7 +119,7 @@ public class PersonaDTO implements Serializable{
             .append("name",name)
             .append("lastName",lastName)
             .append("fullName",fullName)
-            .append("DNI",DNI)
+            .append("DNI",dni)
             .append("contactDetails",contactDetails)
             .toString();
     }

@@ -40,7 +40,7 @@ class PersonaDTODeserializationTest {
         assertEquals("Ana", dto.getName());
         assertEquals("García", dto.getLastName());
         assertNull(dto.getFullName());
-        assertEquals("12345678A", dto.getDNI());
+        assertEquals("12345678A", dto.getDni());
 
         assertEquals(612345678, dto.getContactDetails().getTelephone());
         assertEquals("Calle Mayor 1", dto.getContactDetails().getStreet());
@@ -68,7 +68,7 @@ class PersonaDTODeserializationTest {
         assertEquals("Ana", dto.getName());
         assertEquals("García", dto.getLastName());
         assertEquals("Ana García", dto.getFullName());
-        assertEquals("12345678A", dto.getDNI());
+        assertEquals("12345678A", dto.getDni());
 
         assertEquals(600000000, dto.getContactDetails().getTelephone());
         assertNull(dto.getContactDetails().getStreet());

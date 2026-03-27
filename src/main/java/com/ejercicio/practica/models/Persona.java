@@ -44,7 +44,7 @@ public class Persona {
     public Persona(Integer id, String name, String lastname, String dni){
         this.id = id;
         this.name = name;
-        this.lastname = name;
+        this.lastname = lastname;
         this.dni = dni;
         this.contacto = null;
     }

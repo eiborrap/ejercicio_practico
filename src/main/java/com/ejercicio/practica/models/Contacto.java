@@ -47,6 +47,7 @@ public class Contacto {
         this.street = street;
         this.email = email;
         this.persona = persona;
+        this.personaByDni = persona;
     }
 
     public Contacto(Integer telephone, String street, String email, Persona persona, Persona personaByDni) {
@@ -76,4 +77,29 @@ public class Contacto {
     public Persona getPersonaByDni() {
         return personaByDni;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
+    public void setTelephone(Integer telephone) {
+        this.telephone = telephone;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPersonaByDni(Persona personaByDni) {
+        this.personaByDni = personaByDni;
+    }
+    
 }
