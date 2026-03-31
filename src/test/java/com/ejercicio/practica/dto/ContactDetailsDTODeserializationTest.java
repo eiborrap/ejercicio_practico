@@ -5,8 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.ejercicio.practica.dtos.ContactDetailsDTO;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.exc.ValueInstantiationException;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -60,7 +61,7 @@ class ContactDetailsDTODeserializationTest {
 
         // Builder has only Builder(Integer telephone) constructor, so without telephone JSON
         // Jackson can't create the builder and should throw.
-        assertThrows(JsonProcessingException.class, () -> objectMapper.readValue(json, ContactDetailsDTO.class));
+        assertThrows(ValueInstantiationException.class, () -> objectMapper.readValue(json, ContactDetailsDTO.class));
     }
 
     @Test
@@ -74,6 +75,6 @@ class ContactDetailsDTODeserializationTest {
             """;
 
         // Builder throws IllegalArgumentException when telephone == null; Jackson should wrap it.
-        assertThrows(JsonProcessingException.class, () -> objectMapper.readValue(json, ContactDetailsDTO.class));
+        assertThrows(ValueInstantiationException.class, () -> objectMapper.readValue(json, ContactDetailsDTO.class));
     }
 }

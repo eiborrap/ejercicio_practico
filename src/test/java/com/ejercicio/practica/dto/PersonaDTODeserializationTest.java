@@ -5,15 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.ejercicio.practica.dtos.PersonaDTO;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.exc.ValueInstantiationException;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link PersonaDTO} Jackson deserialization using its Builder-based configuration:
  * {@code @JsonDeserialize(builder = PersonaDTO.Builder.class)} and {@code @JsonPOJOBuilder(withPrefix="set")}.
  *
- * PersonaDTO.Builder constructor requires: name, lastName, DNI, contactDetails.
+ * PersonaDTO.Builder constructor requires: name, lastName, dni, contactDetails.
  */
 class PersonaDTODeserializationTest {
 
@@ -25,7 +25,7 @@ class PersonaDTODeserializationTest {
             {
               "name": "Ana",
               "lastName": "García",
-              "DNI": "12345678A",
+              "dni": "12345678Z",
               "contactDetails": {
                 "telephone": 612345678,
                 "street": "Calle Mayor 1",
@@ -40,7 +40,7 @@ class PersonaDTODeserializationTest {
         assertEquals("Ana", dto.getName());
         assertEquals("García", dto.getLastName());
         assertNull(dto.getFullName());
-        assertEquals("12345678A", dto.getDni());
+        assertEquals("12345678Z", dto.getDni());
 
         assertEquals(612345678, dto.getContactDetails().getTelephone());
         assertEquals("Calle Mayor 1", dto.getContactDetails().getStreet());
@@ -55,7 +55,7 @@ class PersonaDTODeserializationTest {
               "fullName": "Ana García",
               "name": "Ana",
               "lastName": "García",
-              "DNI": "12345678A",
+              "dni": "12345678Z",
               "contactDetails": {
                 "telephone": 600000000
               }
@@ -68,7 +68,7 @@ class PersonaDTODeserializationTest {
         assertEquals("Ana", dto.getName());
         assertEquals("García", dto.getLastName());
         assertEquals("Ana García", dto.getFullName());
-        assertEquals("12345678A", dto.getDni());
+        assertEquals("12345678Z", dto.getDni());
 
         assertEquals(600000000, dto.getContactDetails().getTelephone());
         assertNull(dto.getContactDetails().getStreet());
@@ -80,13 +80,13 @@ class PersonaDTODeserializationTest {
         String json = """
             {
               "lastName": "García",
-              "DNI": "12345678A",
+              "dni": "12345678Z",
               "contactDetails": { "telephone": 612345678 }
             }
             """;
 
         // PersonaDTO.Builder requires name in constructor; without it Jackson can't create the builder.
-        assertThrows(JsonProcessingException.class, () -> objectMapper.readValue(json, PersonaDTO.class));
+        assertThrows(ValueInstantiationException.class, () -> objectMapper.readValue(json, PersonaDTO.class));
     }
 
     @Test
@@ -95,13 +95,13 @@ class PersonaDTODeserializationTest {
             {
               "name": "   ",
               "lastName": "García",
-              "DNI": "12345678A",
+              "dni": "12345678Z",
               "contactDetails": { "telephone": 612345678 }
             }
             """;
 
         // Builder throws IllegalArgumentException when name is blank; Jackson should wrap it.
-        assertThrows(JsonProcessingException.class, () -> objectMapper.readValue(json, PersonaDTO.class));
+        assertThrows(ValueInstantiationException.class, () -> objectMapper.readValue(json, PersonaDTO.class));
     }
 
     @Test
@@ -109,12 +109,12 @@ class PersonaDTODeserializationTest {
         String json = """
             {
               "name": "Ana",
-              "DNI": "12345678A",
+              "dni": "12345678Z",
               "contactDetails": { "telephone": 612345678 }
             }
             """;
 
-        assertThrows(JsonProcessingException.class, () -> objectMapper.readValue(json, PersonaDTO.class));
+        assertThrows(ValueInstantiationException.class, () -> objectMapper.readValue(json, PersonaDTO.class));
     }
 
     @Test
@@ -127,7 +127,7 @@ class PersonaDTODeserializationTest {
             }
             """;
 
-        assertThrows(JsonProcessingException.class, () -> objectMapper.readValue(json, PersonaDTO.class));
+        assertThrows(ValueInstantiationException.class, () -> objectMapper.readValue(json, PersonaDTO.class));
     }
 
     @Test
@@ -136,11 +136,11 @@ class PersonaDTODeserializationTest {
             {
               "name": "Ana",
               "lastName": "García",
-              "DNI": "12345678A"
+              "dni": "12345678Z"
             }
             """;
 
-        assertThrows(JsonProcessingException.class, () -> objectMapper.readValue(json, PersonaDTO.class));
+        assertThrows(ValueInstantiationException.class, () -> objectMapper.readValue(json, PersonaDTO.class));
     }
 
     @Test
@@ -149,12 +149,12 @@ class PersonaDTODeserializationTest {
             {
               "name": "Ana",
               "lastName": "García",
-              "DNI": "12345678A",
+              "dni": "12345678Z",
               "contactDetails": null
             }
             """;
 
-        assertThrows(JsonProcessingException.class, () -> objectMapper.readValue(json, PersonaDTO.class));
+        assertThrows(ValueInstantiationException.class, () -> objectMapper.readValue(json, PersonaDTO.class));
     }
 
     @Test
@@ -163,13 +163,13 @@ class PersonaDTODeserializationTest {
             {
               "name": "Ana",
               "lastName": "García",
-              "DNI": "12345678A",
+              "dni": "12345678Z",
               "contactDetails": {
                 "street": "Calle Mayor 1"
               }
             }
             """;
 
-        assertThrows(JsonProcessingException.class, () -> objectMapper.readValue(json, PersonaDTO.class));
+        assertThrows(ValueInstantiationException.class, () -> objectMapper.readValue(json, PersonaDTO.class));
     }
 }
