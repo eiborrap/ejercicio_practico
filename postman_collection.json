@@ -1,0 +1,369 @@
+{
+  "info": {
+    "_postman_id": "ff40a3a7-1422-4fa9-8fed-6421caf9e28f",
+    "name": "Practica personas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53363079",
+    "_collection_link": "https://go.postman.co/collection/53363079-ff40a3a7-1422-4fa9-8fed-6421caf9e28f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get all personas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/personas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "personas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get valid persona",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/personas/12345678Z",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "personas",
+            "12345678Z"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get invalid persona",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/personas/12345678A",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "personas",
+            "12345678A"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create valid persona",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"idPerson\": null,\r\n  \"name\": \"Pablo\",\r\n  \"fullName\": \"Pablo Sanchez\",\r\n  \"lastName\": \"Sanchez\",\r\n  \"dni\": \"44821328D\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 654783218,\r\n    \"street\": \"Calle la mancha n1\",\r\n    \"email\": \"pablo_sanchez@gmail.com\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/personas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "personas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create invalid persona (DNI too long)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"idPerson\": null,\r\n  \"name\": \"Pablo\",\r\n  \"fullName\": \"Pablo Sanchez\",\r\n  \"lastName\": \"Sanchez\",\r\n  \"dni\": \"448248441328D\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 654783218,\r\n    \"street\": \"Calle la mancha n1\",\r\n    \"email\": \"pablo_sanchez@gmail.com\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/personas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "personas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create invalid persona (DNI incorrect letter)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"idPerson\": null,\r\n  \"name\": \"Pablo\",\r\n  \"fullName\": \"Pablo Sanchez\",\r\n  \"lastName\": \"Sanchez\",\r\n  \"dni\": \"44821328M\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 654783218,\r\n    \"street\": \"Calle la mancha n1\",\r\n    \"email\": \"pablo_sanchez@gmail.com\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/personas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "personas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create invalid persona (DNI incorrect format)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"idPerson\": null,\r\n  \"name\": \"Pablo\",\r\n  \"fullName\": \"Pablo Sanchez\",\r\n  \"lastName\": \"Sanchez\",\r\n  \"dni\": \"44821DD328D\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 654783218,\r\n    \"street\": \"Calle la mancha n1\",\r\n    \"email\": \"pablo_sanchez@gmail.com\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/personas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "personas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update existing persona",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"idPerson\": null,\r\n  \"name\": \"Maria del Carmen\",\r\n  \"fullName\": \"Maria del Carmen Romero\",\r\n  \"lastName\": \"Romero\",\r\n  \"dni\": \"12345678Z\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 654783218,\r\n    \"street\": \"Calle la republica n12\",\r\n    \"email\": \"maria_del_carmen@gmail.com\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/personas/12345678Z",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "personas",
+            "12345678Z"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update incorrect DNI",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"idPerson\": null,\r\n  \"name\": \"Maria del Carmen\",\r\n  \"fullName\": \"Maria del Carmen Romero\",\r\n  \"lastName\": \"Romero\",\r\n  \"dni\": \"12345678R\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 654783218,\r\n    \"street\": \"Calle la republica n12\",\r\n    \"email\": \"maria_del_carmen@gmail.com\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/personas/12345678R",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "personas",
+            "12345678R"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update DNI doesn't exists",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"idPerson\": null,\r\n  \"name\": \"Maria del Carmen\",\r\n  \"fullName\": \"Maria del Carmen Romero\",\r\n  \"lastName\": \"Romero\",\r\n  \"dni\": \"55456734P\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 654783218,\r\n    \"street\": \"Calle la republica n12\",\r\n    \"email\": \"maria_del_carmen@gmail.com\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/personas/55456734P",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "personas",
+            "55456734P"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update DNIs not maching",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"idPerson\": null,\r\n  \"name\": \"Maria del Carmen\",\r\n  \"fullName\": \"Maria del Carmen Romero\",\r\n  \"lastName\": \"Romero\",\r\n  \"dni\": \"12345678M\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 654783218,\r\n    \"street\": \"Calle la republica n12\",\r\n    \"email\": \"maria_del_carmen@gmail.com\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/personas/12345678Z",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "personas",
+            "12345678Z"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete existing persona",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"idPerson\": null,\r\n  \"name\": \"Maria del Carmen\",\r\n  \"fullName\": \"Maria del Carmen Romero\",\r\n  \"lastName\": \"Romero\",\r\n  \"dni\": \"55456734P\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 654783218,\r\n    \"street\": \"Calle la republica n12\",\r\n    \"email\": \"maria_del_carmen@gmail.com\"\r\n  }\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/personas/12345678Z",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "personas",
+            "12345678Z"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete incorrect DNI format",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"idPerson\": null,\r\n  \"name\": \"Maria del Carmen\",\r\n  \"fullName\": \"Maria del Carmen Romero\",\r\n  \"lastName\": \"Romero\",\r\n  \"dni\": \"55456734P\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 654783218,\r\n    \"street\": \"Calle la republica n12\",\r\n    \"email\": \"maria_del_carmen@gmail.com\"\r\n  }\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/personas/55456734M",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "personas",
+            "55456734M"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete all personas",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"idPerson\": null,\r\n  \"name\": \"Maria del Carmen\",\r\n  \"fullName\": \"Maria del Carmen Romero\",\r\n  \"lastName\": \"Romero\",\r\n  \"dni\": \"55456734P\",\r\n  \"contactDetails\": {\r\n    \"telephone\": 654783218,\r\n    \"street\": \"Calle la republica n12\",\r\n    \"email\": \"maria_del_carmen@gmail.com\"\r\n  }\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/personas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "personas"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
