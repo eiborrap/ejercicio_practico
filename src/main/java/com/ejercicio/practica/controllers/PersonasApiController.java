@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
-
-
+/**
+ * REST controller exposing CRUD endpoints for {@code /personas}.
+ *
+ * <p>Delegates business logic to {@link PersonaServices}.</p>
+ */
 @RestController
 @RequestMapping("/personas")
 public class PersonasApiController {

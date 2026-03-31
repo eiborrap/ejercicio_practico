@@ -9,6 +9,20 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.GenerationType;
 
+/**
+ * JPA entity representing a person.
+ *
+ * <p>Maps to table {@code T_PERSONS}.</p>
+ *
+ * <p>Key constraints / relationships:</p>
+ * <ul>
+ *   <li>{@code id} is the primary key and is generated using identity strategy.</li>
+ *   <li>{@code dni} is mandatory and unique, and is used as a referenced column by {@link Contacto}
+ *       (see {@code T_CONTACTS.DNI -> T_PERSONS.DNI}).</li>
+ *   <li>{@code contacto} is an optional one-to-one association owned by {@link Contacto}
+ *       (mapped by {@code Contacto.persona}).</li>
+ * </ul>
+ */
 @Entity
 @Table(name = "T_PERSONS")
 public class Persona {

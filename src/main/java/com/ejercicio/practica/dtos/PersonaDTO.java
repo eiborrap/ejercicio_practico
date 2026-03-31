@@ -13,6 +13,21 @@ import tools.jackson.databind.annotation.JsonPOJOBuilder;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;
 
+/**
+ * Data Transfer Object (DTO) representing a person.
+ *
+ * <p>This DTO is immutable and is intended to be deserialized from JSON using the
+ * {@link PersonaDTO.Builder} (see {@link JsonDeserialize} / {@link JsonPOJOBuilder}).</p>
+ *
+ * <p>Validation rules:</p>
+ * <ul>
+ *   <li>{@code name} is mandatory and has a maximum length of 30 characters (see {@link Size}).</li>
+ *   <li>{@code lastName} is mandatory and has a maximum length of 50 characters (see {@link Size}).</li>
+ *   <li>{@code dni} is mandatory and must match the custom {@link Dni} constraint.</li>
+ *   <li>{@code contactDetails} is mandatory.</li>
+ *   <li>{@code idPerson} and {@code fullName} are optional (may be {@code null}).</li>
+ * </ul>
+ */
 @Schema
 @JsonDeserialize(builder = PersonaDTO.Builder.class)
 public class PersonaDTO implements Serializable{

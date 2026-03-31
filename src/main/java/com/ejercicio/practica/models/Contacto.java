@@ -8,6 +8,26 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+/**
+ * JPA entity representing a person's contact information.
+ *
+ * <p>Maps to table {@code T_CONTACTS}. The entity uses a shared primary key
+ * association with {@link Persona}:</p>
+ * <ul>
+ *   <li>{@code id} is both the primary key of {@code T_CONTACTS} and a foreign key to
+ *       {@code T_PERSONS.ID_PERSON} (see {@link MapsId}).</li>
+ *   <li>{@code persona} is the mandatory one-to-one association using the shared PK.</li>
+ *   <li>{@code personaByDni} is an additional association using {@code DNI} as a foreign key
+ *       (see {@link JoinColumn}), pointing to {@code T_PERSONS.DNI}. It is here due to Table design
+ *       requirements.</li>
+ * </ul>
+ *
+ * <p>Field constraints:</p>
+ * <ul>
+ *   <li>{@code telephone} is mandatory (non-null).</li>
+ *   <li>{@code street} and {@code email} are optional.</li>
+ * </ul>
+ */
 @Entity
 @Table(name = "T_CONTACTS")
 public class Contacto {

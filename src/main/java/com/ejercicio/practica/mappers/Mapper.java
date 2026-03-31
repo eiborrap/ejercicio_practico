@@ -5,17 +5,30 @@ import com.ejercicio.practica.dtos.PersonaDTO;
 import com.ejercicio.practica.models.Contacto;
 import com.ejercicio.practica.models.Persona;
 
+/**
+ * Utility class containing mapping helpers between persistence entities and API DTOs.
+ *
+ * <p>Centralizes the conversion logic between:</p>
+ * <ul>
+ *   <li>{@link PersonaDTO} <-> {@link Persona}</li>
+ *   <li>{@link ContactDetailsDTO} <-> {@link Contacto}</li>
+ * </ul>
+ *
+ * <p>This class is stateless and cannot be instantiated.</p>
+ */
 public final class Mapper {
 
     private Mapper() {
     }
 
     /**
-     * DTO -> Entity.
+     * Maps a {@link PersonaDTO} into a {@link Persona} entity.
      *
-     * <p>
-     * If the DTO has no id, we keep id=0 so JPA {@code @GeneratedValue} can assign
-     * it on insert.
+     * <p>The returned {@link Persona} will also contain a {@link Contacto} entity built from
+     * {@link PersonaDTO#getContactDetails()} and associated back to the created {@link Persona}.</p>
+     *
+     * @param dto source DTO
+     * @return mapped entity
      */
     public static Persona toPersona(PersonaDTO dto) {
 
@@ -37,9 +50,13 @@ public final class Mapper {
     }
 
     /**
-     * Entity -> DTO. ContactDetails are mandatory in {@link PersonaDTO}, so this
-     * method requires a {@link Contacto}. Use the overload with Optional if you
-     * might not have it.
+     * Maps a {@link Persona} entity into a {@link PersonaDTO}.
+     *
+     * <p>Creates {@code fullName} as {@code "name lastname"} and maps contact information
+     * from {@link Persona#getContacto()}.</p>
+     *
+     * @param persona source entity
+     * @return mapped DTO
      */
     public static PersonaDTO toPersonaDTO(Persona persona) {
         ContactDetailsDTO contactDetails = toContactDetailsDTO(persona.getContacto());
@@ -54,6 +71,12 @@ public final class Mapper {
                 .build();
     }
 
+    /**
+     * Maps a {@link Contacto} entity into a {@link ContactDetailsDTO}.
+     *
+     * @param c source contact entity
+     * @return mapped DTO
+     */
     private static ContactDetailsDTO toContactDetailsDTO(Contacto c){
         return new ContactDetailsDTO.Builder()
                 .setTelephone(c.getTelephone())

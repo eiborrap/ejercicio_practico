@@ -9,6 +9,20 @@ import jakarta.validation.constraints.Email;
 import tools.jackson.databind.annotation.JsonDeserialize;
 import tools.jackson.databind.annotation.JsonPOJOBuilder;
 
+/**
+ * Data Transfer Object (DTO) representing a person's contact details.
+ *
+ * <p>This DTO is immutable and is intended to be deserialized from JSON using the
+ * {@link ContactDetailsDTO.Builder} (see {@link JsonDeserialize} / {@link JsonPOJOBuilder}).</p>
+ *
+ * <p>Validation rules:</p>
+ * <ul>
+ *   <li>{@code telephone} is mandatory (cannot be {@code null}).</li>
+ *   <li>{@code street} is optional (can be {@code null}).</li>
+ *   <li>{@code email} is optional (can be {@code null}); if present it must be a valid email
+ *       address (see {@link Email}).</li>
+ * </ul>
+ */
 @JsonDeserialize(builder = ContactDetailsDTO.Builder.class)
 public class ContactDetailsDTO implements Serializable{
     private final Integer telephone;
@@ -22,8 +36,6 @@ public class ContactDetailsDTO implements Serializable{
         this.email = builder.email;
     }
 
-
-
     public Integer getTelephone(){
         return telephone; //It can't be null, telephone is mandatory
     }
@@ -32,11 +44,6 @@ public class ContactDetailsDTO implements Serializable{
     }
     public String getEmail(){
         return email;
-    }
-
-        
-    protected ContactDetailsDTO copy(){
-        return new ContactDetailsDTO.Builder().setTelephone(telephone).setStreet(street).setEmail(email).build();
     }
 
     @JsonPOJOBuilder(buildMethodName = "build", withPrefix = "set")
