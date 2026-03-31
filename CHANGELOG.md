@@ -1,4 +1,7 @@
 # Changelog
+## 0.9.8 - 2026-03-31
+### Added
+- Logging en PersonaServices.
 ## 0.9.7 - 2026-03-31
 ### Added
 - Tests para Contacto (`ContactoTest`) y Persona (`PersonaTest`)

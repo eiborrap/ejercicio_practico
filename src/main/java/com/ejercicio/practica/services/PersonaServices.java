@@ -2,6 +2,8 @@ package com.ejercicio.practica.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ import com.ejercicio.practica.repositories.PersonaRepository;
  */
 @Service
 public class PersonaServices {
+    private static final Logger log = LoggerFactory.getLogger(PersonaServices.class);
+
     @Autowired
     private PersonaRepository personaRepository;
 
@@ -27,9 +31,9 @@ public class PersonaServices {
      *
      * @return list of persons as DTOs
      */
-    public List<PersonaDTO> getAllPersonas(){
+    public List<PersonaDTO> getAllPersonas() {
+        log.debug("Fetching all personas");
         List<Persona> personas = personaRepository.findAll();
-        personas.forEach(Mapper::toPersonaDTO);
         return personas.stream().map(Mapper::toPersonaDTO).toList();
     }
     /**
@@ -38,8 +42,13 @@ public class PersonaServices {
      * @param dni unique DNI
      * @return person as DTO
      */
-    public PersonaDTO getByDni(String dni){
+    public PersonaDTO getByDni(String dni) {
+        log.debug("Fetching persona by dni={}", dni);
         Persona p = personaRepository.getByDni(dni);
+        if (p == null) {
+            log.warn("Persona not found for dni={}", dni);
+            return null;
+        }
         return Mapper.toPersonaDTO(p);
     }
 
@@ -53,11 +62,16 @@ public class PersonaServices {
      * @return persisted person as DTO (including generated id)
      */
     @Transactional
-    public PersonaDTO createPersona(PersonaDTO newPersona){
+    public PersonaDTO createPersona(PersonaDTO newPersona) {
+        log.info("Creating persona dni={}", newPersona != null ? newPersona.getDni() : null);
+
         Persona persona = Mapper.toPersona(newPersona);
         personaRepository.save(persona);
-        
-        return Mapper.toPersonaDTO(personaRepository.getById(persona.getId()));
+
+        Persona persisted = personaRepository.getById(persona.getId());
+        log.info("Created persona id={} dni={}", persisted.getId(), persisted.getDni());
+
+        return Mapper.toPersonaDTO(persisted);
     }
 
     /**
@@ -74,15 +88,25 @@ public class PersonaServices {
      * @return the provided DTO once the update is applied
      * @throws IllegalArgumentException if DNI does not match or does not exist
      */
-    public PersonaDTO updatePersona(String dni, PersonaDTO personaDto) throws IllegalArgumentException{
-        if(!dni.equals(personaDto.getDni())){
+    public PersonaDTO updatePersona(String dni, PersonaDTO personaDto) throws IllegalArgumentException {
+        log.info("Updating persona dni={}", dni);
+
+        if (personaDto == null) {
+            log.warn("Update persona requested with null body (dni={})", dni);
+            throw new IllegalArgumentException("Persona body cannot be null");
+        }
+
+        if (!dni.equals(personaDto.getDni())) {
+            log.warn("DNI mismatch: pathDni={} bodyDni={}", dni, personaDto.getDni());
             throw new IllegalArgumentException("Dni must be equals to the object's dni that you want to modify");
         }
+
         Persona existsPersona = personaRepository.getByDni(dni);
-        if(existsPersona == null){
+        if (existsPersona == null) {
+            log.warn("Cannot update: persona not found for dni={}", dni);
             throw new IllegalArgumentException("Dni doesn't exist.");
         }
-        
+
         Persona newDataPersona = Mapper.toPersona(personaDto);
 
         existsPersona.setName(newDataPersona.getName());
@@ -91,6 +115,8 @@ public class PersonaServices {
         existsPersona.getContacto().setEmail(newDataPersona.getContacto().getEmail());
         existsPersona.getContacto().setStreet(newDataPersona.getContacto().getStreet());
         personaRepository.save(existsPersona);
+
+        log.info("Updated persona id={} dni={}", existsPersona.getId(), existsPersona.getDni());
         return personaDto;
     }
 
@@ -99,15 +125,22 @@ public class PersonaServices {
      *
      * @param dni DNI of the person to delete
      */
-    public void deleteByDni(String dni){
+    public void deleteByDni(String dni) {
+        log.info("Deleting persona dni={}", dni);
         Persona p = personaRepository.getByDni(dni);
+        if (p == null) {
+            log.warn("Cannot delete: persona not found for dni={}", dni);
+            return;
+        }
         personaRepository.deleteById(p.getId());
+        log.info("Deleted persona id={} dni={}", p.getId(), p.getDni());
     }
 
     /**
      * Deletes all persons.
      */
-    public void deleteAllPersona(){
+    public void deleteAllPersona() {
+        log.warn("Deleting ALL personas");
         personaRepository.deleteAll();
     }
 }
