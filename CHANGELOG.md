@@ -1,5 +1,5 @@
 # Changelog
-## 0.1.0 - 2026-04-01
+## 1.0.0 - 2026-04-01
 ### Added
 - Nuevo endpoint ("/") que devuelve la vista de thymeleaf con todos los datos de Personas y sus Contactos.
 - Tests para nuevo PersonaController
