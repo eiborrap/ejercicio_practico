@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thymeleaf Template</title>
+</head>
+<body>
+    <h1>Personas</h1>
+
+    <table border="1" cellpadding="6" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Last name</th>
+                <th>Full name</th>
+                <th>DNI</th>
+                <th>Telephone</th>
+                <th>Street</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="p : ${list}">
+                <td th:text="${p.idPerson}">1</td>
+                <td th:text="${p.name}">Name</td>
+                <td th:text="${p.lastName}">Last</td>
+                <td th:text="${p.fullName}">Full name</td>
+                <td th:text="${p.dni}">00000000A</td>
+                <td th:text="${p.contactDetails.telephone}">600000000</td>
+                <td th:text="${p.contactDetails.street}">Street</td>
+                <td th:text="${p.contactDetails.email}">email@example.com</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

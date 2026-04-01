@@ -37,8 +37,13 @@ public class PersonasApiController {
     }
 
     @PostMapping
-    public ResponseEntity<PersonaDTO> createPersona(@Valid @RequestBody PersonaDTO persona) {
-        return ResponseEntity.ok(personaServices.createPersona(persona));
+    public ResponseEntity<Object> createPersona(@Valid @RequestBody PersonaDTO persona) {
+        try{
+            return ResponseEntity.ok(personaServices.createPersona(persona));
+        }
+        catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e);
+        }
     }
 
     @GetMapping("/{DNI}")

@@ -82,6 +82,29 @@ class PersonasApiControllerTest {
     }
 
     @Test
+    void createPersona_whenServiceThrowsIllegalArgument_returnsBadRequest() throws Exception {
+        // PersonaServices maps duplicate DNI (DataIntegrityViolationException) to IllegalArgumentException
+        doThrow(new IllegalArgumentException("Dni already exists."))
+                .when(personaServices).createPersona(any(PersonaDTO.class));
+
+        mockMvc.perform(post("/personas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "name": "Pepe",
+                                  "lastName": "Perez",
+                                  "fullName": "Pepe Perez",
+                                  "dni": "12345678Z",
+                                  "contactDetails": {
+                                    "telephone": 666666666,
+                                    "email": "pepe@example.com"
+                                  }
+                                }
+                                """))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void getPersona_invalidDniPath_returnsBadRequest() throws Exception {
         // Invalid DNI format should be rejected by @Dni validator on @PathVariable
         mockMvc.perform(get("/personas/{DNI}", "INVALID"))

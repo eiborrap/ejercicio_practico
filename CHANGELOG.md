@@ -1,4 +1,12 @@
 # Changelog
+## 0.1.0 - 2026-04-01
+### Added
+- Nuevo endpoint ("/") que devuelve la vista de thymeleaf con todos los datos de Personas y sus Contactos.
+- Tests para nuevo PersonaController
+- Añadida dependecia de thymeleaf.
+### Fixed
+- Solucionado errores con nulls en PersonaService.
+
 ## 0.9.9 - 2026-03-31
 ### Added
 - Postman Collection con peticiones a todos los endpoints.

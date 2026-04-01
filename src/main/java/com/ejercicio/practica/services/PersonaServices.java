@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,7 +67,12 @@ public class PersonaServices {
         log.info("Creating persona dni={}", newPersona != null ? newPersona.getDni() : null);
 
         Persona persona = Mapper.toPersona(newPersona);
-        personaRepository.save(persona);
+        try {
+            personaRepository.save(persona);
+        } catch (DataIntegrityViolationException e) {
+            log.warn("Data integrity violation creating persona (dni={})", newPersona != null ? newPersona.getDni() : null, e);
+            throw new IllegalArgumentException("Dni already exists.");
+        }
 
         Persona persisted = personaRepository.getById(persona.getId());
         log.info("Created persona id={} dni={}", persisted.getId(), persisted.getDni());
